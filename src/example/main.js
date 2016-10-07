@@ -21,9 +21,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import document from 'global/document';
+import * as d3Shape from 'd3-shape';
 
 import ComplexChart from './plot/complex-chart';
 import LineChart from './plot/line-chart';
+import LineCurveChart from './plot/line-curve-chart';
 import LineMarkChart from './plot/linemark-chart';
 import BarChart from './plot/bar-chart';
 import StackedBarChart from './plot/stacked-bar-chart';
@@ -151,6 +153,29 @@ const examples = (
         <h3>Dynamic Crosshair</h3>
         <p>Move your mouse over the chart to see the point.</p>
         <DynamicCrosshair />
+      </section>
+      <h2>Curves</h2>
+      <section>
+        <h3>Basis</h3>
+        <p>Produces a cubic basis spline using the specified control points.</p>
+        <LineCurveChart curveFn={d3Shape.curveBasis} />
+      </section>
+      <section>
+        <h3>Natural</h3>
+        <p>Produces a natural cubic spline with the second derivative of the
+          spline set to zero at the endpoints.</p>
+        <LineCurveChart curveFn={d3Shape.curveNatural} />
+      </section>
+      <section>
+        <h3>catmullRom (alpha = 0.5)</h3>
+        <p>Produces a cubic Catmull–Rom spline using the specified control
+          points and the parameter alpha.</p>
+        <LineCurveChart curveFn={d3Shape.curveCatmullRom.alpha(0.5)} />
+      </section>
+      <section>
+        <h3>Linear</h3>
+        <p>Produces a polyline through the specified points.</p>
+        <LineCurveChart curveFn={d3Shape.curveLinear} />
       </section>
       <h2>Miscellaneous</h2>
       <section>

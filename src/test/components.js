@@ -20,6 +20,7 @@
 
 import test from 'tape';
 import React from 'react';
+import {curveBasis as d3ShapecurveBasis} from 'd3-shape';
 import {mount} from 'enzyme';
 import Treemap from '../lib/treemap/treemap';
 import Table from '../lib/table/table';
@@ -89,6 +90,9 @@ const XYPLOT_SERIES_PROPS = {
   onValueClick: NOOP
 };
 
+const XYPLOT_SERIES_WITH_CURVE_PROPS = JSON.parse(JSON.stringify(XYPLOT_SERIES_PROPS));
+XYPLOT_SERIES_WITH_CURVE_PROPS.curveFn = d3ShapecurveBasis;
+
 const XYPLOT_XAXIS_PROPS = {
   xRange: [0, 1],
   xDomain: [0, 1],
@@ -114,6 +118,7 @@ const XYPLOT_PROPS = {width: 10, height: 10};
 testRenderWithProps(Treemap, TREEMAP_PROPS);
 testRenderWithProps(Table, TABLE_PROPS);
 testRenderWithProps(LineSeries, XYPLOT_SERIES_PROPS);
+testRenderWithProps(LineSeries, XYPLOT_SERIES_WITH_CURVE_PROPS);
 testRenderWithProps(AreaSeries, XYPLOT_SERIES_PROPS);
 testRenderWithProps(MarkSeries, XYPLOT_SERIES_PROPS);
 testRenderWithProps(VerticalBarSeries, XYPLOT_SERIES_PROPS);

@@ -334,6 +334,11 @@ If set to `dashed`, your series will use dashed lines. If set to `solid` or unsp
 Type: `string|number`
 Specifies the width of the line for the series. By default, this is determined by react-vis css (2px).
 
+##### curveFn (optional)
+Type: `function`
+Specifies a curve factory function in charge of interpolating between the two-dimensional [x, y] points. By default, `curveLinear` factory is used.  
+**NOTE**: All available curve factories are documented in [`d3-shape` documentation](https://github.com/d3/d3-shape#curves).
+
 ### Hint
 
 `Hint` is a simple component that shows tooltips inside the chart. Hint places itself to the place which is set by your data.

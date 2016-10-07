@@ -24,7 +24,7 @@ import * as d3Shape from 'd3-shape';
 import AbstractSeries from './abstract-series';
 import Animation from '../../animation';
 
-import {DEFAULT_OPACITY} from '../../theme';
+import {DEFAULT_OPACITY, DEFAULT_CURVE_FACTORY} from '../../theme';
 import {ANIMATED_SERIES_PROPS} from '../../utils/series-utils';
 
 const STROKE_STYLES = {
@@ -34,15 +34,34 @@ const STROKE_STYLES = {
 
 const defaultProps = {
   strokeStyle: 'solid',
-  opacity: 1
+  opacity: 1,
+  curveFn: null
 };
 
 const propTypes = {
   ...AbstractSeries.propTypes,
-  strokeStyle: React.PropTypes.oneOf(Object.keys(STROKE_STYLES))
+  strokeStyle: React.PropTypes.oneOf(Object.keys(STROKE_STYLES)),
+  curveFn: React.PropTypes.func
 };
 
 class LineSeries extends AbstractSeries {
+
+  constructor(props) {
+    super(props);
+    this._getCurveFactory = this._getCurveFactory.bind(this);
+  }
+
+  /**
+   * Returns the curve factory received as a component property if any.
+   * @returns {function} curve factory as a function.
+   * @protected
+   */
+  _getCurveFactory() {
+    if (this.props.curveFn && (typeof this.props.curveFn === 'function')) {
+      return this.props.curveFn;
+    }
+    return DEFAULT_CURVE_FACTORY;
+  }
 
   render() {
     const {data, animation} = this.props;
@@ -64,7 +83,7 @@ class LineSeries extends AbstractSeries {
     const stroke = this._getAttributeValue('stroke') ||
       this._getAttributeValue('color');
     const opacity = this._getAttributeValue('opacity') || DEFAULT_OPACITY;
-    const line = d3Shape.line().x(x).y(y);
+    const line = d3Shape.line().x(x).y(y).curve(this._getCurveFactory());
     const d = line(data);
 
     return (

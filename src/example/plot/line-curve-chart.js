@@ -18,31 +18,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {curveLinear as d3ShapeCurveLinear} from 'd3-shape';
+import React from 'react';
 
-export const DISCRETE_COLOR_RANGE = [
-  '#12939A',
-  '#79C7E3',
-  '#1A3177',
-  '#FF9833',
-  '#EF5D28'
-];
+import {
+  XYPlot,
+  XAxis,
+  YAxis,
+  HorizontalGridLines,
+  VerticalGridLines,
+  LineSeries} from '../../';
 
-export const CONTINUOUS_COLOR_RANGE = [
-  '#EF5D28',
-  '#FF9833'
-];
+class Example extends React.Component {
+  render() {
+    return (
+      <XYPlot
+        width={300}
+        height={300}>
+        <HorizontalGridLines />
+        <VerticalGridLines />
+        <XAxis title="X Axis" />
+        <YAxis title="Y Axis" />
+        <LineSeries
+          data={[
+            {x: 1, y: 3},
+            {x: 2, y: 5},
+            {x: 3, y: 15},
+            {x: 4, y: 12},
+            {x: 5, y: 10},
+            {x: 6, y: 8},
+            {x: 7, y: 6},
+            {x: 8, y: 3}
+          ]}
+          curveFn={this.props.curveFn}/>
+      </XYPlot>
+    );
+  }
+}
 
-export const SIZE_RANGE = [1, 10];
+Example.propTypes = {
+  curveFn: React.PropTypes.func
+};
+Example.defaultProps = {
+  curveFn: null
+};
 
-export const OPACITY_RANGE = [0.1, 1];
-
-export const DEFAULT_OPACITY = 1;
-
-export const DEFAULT_SIZE = 5;
-
-export const DEFAULT_COLOR = DISCRETE_COLOR_RANGE[0];
-
-export const DEFAULT_TICK_SIZE = 7;
-
-export const DEFAULT_CURVE_FACTORY = d3ShapeCurveLinear;
+export default Example;
