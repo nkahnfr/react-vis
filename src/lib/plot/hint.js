@@ -57,14 +57,18 @@ class Hint extends PureRenderComponent {
         ORIENTATION_BOTTOMRIGHT,
         ORIENTATION_TOPLEFT,
         ORIENTATION_TOPRIGHT
-      ])
+      ]),
+      xCoord: React.PropTypes.number,
+      yCoord: React.PropTypes.number
     };
   }
 
   static get defaultProps() {
     return {
       format: defaultFormat,
-      orientation: ORIENTATION_AUTO
+      orientation: ORIENTATION_AUTO,
+      xCoord: null,
+      yCoord: null
     };
   }
 
@@ -198,11 +202,13 @@ class Hint extends PureRenderComponent {
    */
   _getPositionInfo() {
     const {
-      value,
+      xCoord, yCoord, value,
       orientation: initialOrientation} = this.props;
 
-    const x = getAttributeFunctor(this.props, 'x')(value);
-    const y = getAttributeFunctor(this.props, 'y')(value);
+    const x = (xCoord !== null) ? xCoord :
+      getAttributeFunctor(this.props, 'x')(value);
+    const y = (yCoord !== null) ? yCoord :
+      getAttributeFunctor(this.props, 'y')(value);
 
     const orientation = initialOrientation === ORIENTATION_AUTO ?
       this._getOrientationFromAuto(x, y) : initialOrientation;
