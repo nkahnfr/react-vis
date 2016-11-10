@@ -71,7 +71,7 @@
     "build": "npm run build-js && npm run build-css",
     "watch": "npm run build-example && npm run watch-example && (budo dist/example/main.js --live --css dist/example/main.css)",
     "lint": "eslint src",
-    "execute-tests": "run-browser-babel dist/test/index.js --bx react/addons --bx react/lib/ReactContext --bx react/lib/ExecutionEnvironment --phantom",
+    "execute-tests": "run-browser-babel dist/test/index.js --bx react/addons --bx react/lib/ReactContext --bx react/lib/ExecutionEnvironment --phantom --port 3030",
     "test": "npm run build-js && npm run execute-tests",
     "cover": "npm run build-js && npm run execute-tests -- --report=text --report=cobertura --report=html --report=json-summary",
     "precommit": "npm run lint -s",
