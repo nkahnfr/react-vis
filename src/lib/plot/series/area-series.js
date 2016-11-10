@@ -27,6 +27,11 @@ import Animation from '../../animation';
 import {DEFAULT_OPACITY} from '../../theme';
 import {ANIMATED_SERIES_PROPS} from '../../utils/series-utils';
 
+const propTypes = {
+  ...AbstractSeries.propTypes,
+  pointerEvents: React.PropTypes.string
+};
+
 class AreaSeries extends AbstractSeries {
 
   render() {
@@ -52,6 +57,7 @@ class AreaSeries extends AbstractSeries {
     const fill = this._getAttributeValue('fill') ||
       this._getAttributeValue('color');
     const opacity = this._getAttributeValue('opacity') || DEFAULT_OPACITY;
+    const pointerEvents = this._getAttributeValue('pointerEvents') || 'auto';
     const line = d3Shape.area().x(x).y0(y0).y1(y);
     const d = line(data);
 
@@ -66,7 +72,8 @@ class AreaSeries extends AbstractSeries {
         style={{
           opacity,
           stroke,
-          fill
+          fill,
+          pointerEvents
         }}/>
     );
   }
@@ -74,5 +81,6 @@ class AreaSeries extends AbstractSeries {
 }
 
 AreaSeries.displayName = 'AreaSeries';
+AreaSeries.propTypes = propTypes;
 
 export default AreaSeries;
